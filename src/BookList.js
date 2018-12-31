@@ -10,12 +10,13 @@ class BookList extends Component{
 
     render(){
         const {book, shelfChange} = this.props
+        const backgroundImage = book.hasOwnProperty('imageLinks') ? book.imageLinks.smallThumbnail : ''
 
         return(
             <li>
                 <div className="book">
                 <div className="book-top">
-                    <div className="book-cover" style={{ width: 128, height: 170, backgroundImage: `url(${book.imageLinks.smallThumbnail})` }}></div>
+                    <div className="book-cover" style={{ width: 128, height: 170, backgroundImage: `url(${backgroundImage})` }}></div>
 
                     <BookshelfChanger
                         book={book}
@@ -23,9 +24,11 @@ class BookList extends Component{
                     />
                 </div>
                 <div className="book-title">{book.title}</div>
-                {book.authors.map(author => (
-                    <div key={author} className="book-authors">{author}</div>
-                ))}                        
+                    { book.hasOwnProperty('authors') ?
+                        book.authors.map(author => (
+                            <div key={author} className="book-authors">{author}</div>
+                        )) : <div className="book-authors">author unavailable</div>
+                    }       
                 </div>
             </li>
         )
