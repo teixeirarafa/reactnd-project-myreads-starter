@@ -7,7 +7,8 @@ import BookList from './BookList';
 class SearchBook extends Component{
   static propTypes = {
     history: PropTypes.object.isRequired,
-    shelfChange : PropTypes.func.isRequired,
+    shelfChange: PropTypes.func.isRequired,
+    booksOnShelf: PropTypes.object.isRequired,
   }
 
   state = {
@@ -27,21 +28,34 @@ class SearchBook extends Component{
     if (val.length !== 0) {
       BooksAPI.search(val).then((books) => {
         if (books !== undefined && books.error !== 'empty query') {
-           this.setState(() => ({
-            booksFound: books
-          }))
+           this.updateBooks(books)
         }
         else{
           this.setState({booksFound: []})         
         }
       })
     } else {
-      this.setState({booksFound: [], query: ''})      
+      this.setState({booksFound: []})      
     }
   }
 
+  updateBooks(books) {
+    const verifiedBooks = books.map(book => {
+      book.shelf = "none";
+      this.props.booksOnShelf.forEach(bookOnShelf => {
+        if (book.id === bookOnShelf.id) {
+          book.shelf = bookOnShelf.shelf;
+        }
+      });
+      return book;
+    });
+    this.setState({
+      booksFound: verifiedBooks
+    });
+  }
+
   render(){
-      const {query} = this.state
+      const {query, booksFound} = this.state
 
       return(
           <div className="search-books">
@@ -58,7 +72,7 @@ class SearchBook extends Component{
           </div>
           <div className="search-books-results">
             <ol className="books-grid">
-              {this.state.booksFound.map((book) => (
+              {booksFound.map((book) => (
                 <BookList 
                   key={book.id} 
                   book={book}

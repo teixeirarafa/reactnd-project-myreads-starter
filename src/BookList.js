@@ -24,7 +24,7 @@ class BookList extends Component{
                     />
                 </div>
                 <div className="book-title">{book.title}</div>
-                    { book.hasOwnProperty('authors') ?
+                    { book.authors ?
                         book.authors.map(author => (
                             <div key={author} className="book-authors">{author}</div>
                         )) : <div className="book-authors">author unavailable</div>

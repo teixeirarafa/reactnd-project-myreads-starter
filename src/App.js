@@ -38,6 +38,7 @@ class BooksApp extends React.Component {
           <SearchBook
             history={ history }
             shelfChange={ this.shelfChange }
+            booksOnShelf={this.state.books}
           />
         )} />
           
