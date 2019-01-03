@@ -8,7 +8,7 @@ class SearchBook extends Component{
   static propTypes = {
     history: PropTypes.object.isRequired,
     shelfChange: PropTypes.func.isRequired,
-    booksOnShelf: PropTypes.object.isRequired,
+    booksOnShelf: PropTypes.array.isRequired,
   }
 
   state = {
@@ -55,33 +55,33 @@ class SearchBook extends Component{
   }
 
   render(){
-      const {query, booksFound} = this.state
+    const {query, booksFound} = this.state
 
-      return(
-          <div className="search-books">
-          <div className="search-books-bar">
-            <button className="close-search" onClick={() => this.props.history.push('/')} >Close</button>
-            <div className="search-books-input-wrapper">             
-              <DebounceInput
-                debounceTimeout={500}
-                placeholder="Search by title or author"
-                value={query}
-                onChange={(event) => this.updateQuery(event.target.value)}
-              />
-            </div>
-          </div>
-          <div className="search-books-results">
-            <ol className="books-grid">
-              {booksFound.map((book) => (
-                <BookList 
-                  key={book.id} 
-                  book={book}
-                  shelfChange={this.props.shelfChange}/>
-              ))}
-            </ol>
+    return(
+        <div className="search-books">
+        <div className="search-books-bar">
+          <button className="close-search" onClick={() => this.props.history.push('/')} >Close</button>
+          <div className="search-books-input-wrapper"> 
+            <DebounceInput
+              debounceTimeout={500}
+              placeholder="Search by title or author"
+              value={query}
+              onChange={(event) => this.updateQuery(event.target.value)}
+            />
           </div>
         </div>
-      )
+        <div className="search-books-results">
+          <ol className="books-grid">
+            {booksFound.map((book) => (
+              <BookList 
+                key={book.id} 
+                book={book}
+                shelfChange={this.props.shelfChange}/>
+            ))}
+          </ol>
+        </div>
+      </div>
+    )
   }
 }
 
