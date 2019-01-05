@@ -4,7 +4,7 @@ import { PropTypes } from 'prop-types';
 import * as BooksAPI from '../service/BooksAPI';
 import BookList from './BookList';
 
-class SearchBook extends Component{
+class SearchBooks extends Component{
   static propTypes = {
     history: PropTypes.object.isRequired,
     shelfChange: PropTypes.func.isRequired,
@@ -85,4 +85,4 @@ class SearchBook extends Component{
   }
 }
 
-export default SearchBook;
+export default SearchBooks;
